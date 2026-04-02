@@ -16,17 +16,6 @@
 
     <dependencies>
 
-        <!-- ===== Spring Boot Web (REST + Tomcat embarqué) ===== -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-web</artifactId>-->
-<!--        </dependency>-->
-
-        <!-- ===== Spring Boot JPA (Hibernate + Jakarta Persistence inclus) ===== -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--        </dependency>-->
     </dependencies>
 
 </project>
