@@ -25,6 +25,12 @@ public class Account {
         this.accHolderName = "Account Holder";
         this.accountBalance = 0.0;
     }
+    public Account(String accountName, String accountType, Double accountBalance){
+        this.id = nextId();
+        this.accountType = accountType;
+        this.accHolderName = accountName;
+        this.accountBalance = accountBalance;
+    }
 
     public String getAccHolderName() {
         return accHolderName;

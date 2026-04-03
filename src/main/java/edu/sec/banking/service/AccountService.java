@@ -16,6 +16,7 @@ public class AccountService {
             newAccount.setAccountBalance(account.getAccountBalance());
 
             accounts.add(newAccount);
+            IO.println(String.format("Account created successfully!"));
         }
         else {
             System.err.println("account is null");
