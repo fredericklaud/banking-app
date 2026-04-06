@@ -45,8 +45,19 @@ public class AccountService {
         return updateSucces;
     }
 
-    public void deleteAccount(){
-
+    public void deleteAccount(Account account){
+        boolean deleteSuccess = false;
+        if (account != null){
+            for (Account acc: accounts){
+                if (acc.getId() == account.getId()){
+                    deleteSuccess = accounts.remove(acc);
+                    break;
+                }
+            }
+        }
+        if (deleteSuccess){
+            IO.println(String.format("Account deleted successfully"));
+        }
     }
 
     public ArrayList<Account> getAccounts() {
