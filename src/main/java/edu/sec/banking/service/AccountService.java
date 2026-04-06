@@ -45,6 +45,37 @@ public class AccountService {
         return updateSucces;
     }
 
+    public Account getAccountById(Long id){
+        Account account = null;
+        for (Account acc : accounts) {
+            if (id.equals(acc.getId())) {
+                // retrieve account for array list of accounts
+                return acc;
+            }
+        }
+        return null;
+    }
+
+    public void displayAllAccounts(){
+        IO.println("============== Accounts ==============");
+
+        if (accounts != null){
+            for (Account acc: accounts) {
+                displayAccount(acc);
+                IO.println("-----------------------------------------\n");
+            }
+        }
+
+    }
+    public void displayAccount(Account account){
+        IO.println(String.format(
+                        "AccountId: %d\nAccount Name: %s\nAccount Type: %s\nAccount Balance: $%.3f",
+                account.getId(), account.getAccHolderName(),
+                account.getAccountType(), account.getAccountBalance()
+                )
+        );
+    }
+
     public void deleteAccount(Account account){
         boolean deleteSuccess = false;
         if (account != null){

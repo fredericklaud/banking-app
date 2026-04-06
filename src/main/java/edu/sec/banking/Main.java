@@ -30,73 +30,155 @@ public class Main {
         while (appRunning){
 
             Scanner input = new Scanner(System.in);
-            IO.println(String.format("=================================="));
-            IO.println(String.format("     SLogics Banking System! "));
-            IO.println(String.format("=================================="));
+            IO.println("==================================");
+            IO.println("     SLogics Banking System! ");
+            IO.println("==================================");
 
-            IO.println(String.format("================ Menu ================"));
-            IO.println(String.format("Press 1 to create an account"));
-            IO.println(String.format("Press 2 to update an account"));
-            IO.println(String.format("Press 3 to delete an account"));
-            IO.println(String.format("Press 4 to exit"));
+            IO.println("================ Menu ================");
+            IO.println("Press 0 to show all accounts.");
+            IO.println("Press 1 to create an account");
+            IO.println("Press 2 to update an account");
+            IO.println("Press 3 to delete an account");
+            IO.println("Press 4 to exit");
 
             int option = input.nextInt();
             input.nextLine(); //
 
             switch (option){
+                case 0:
+                    accountService.displayAllAccounts();
+                    break;
                 case 1:
-                    IO.println(String.format("Please enter account name"));
-                    String accountName = input.nextLine().trim();
-
-                    boolean isAccountOption = false;
-                    String accountType = "CHECKING";
-                    while (!isAccountOption) {
-                        IO.println(String.format("Please Choose account type: 1 for checking, 2 for saving."));
-                        int accType = input.nextInt();
-
-                        if (accType == 1) {
-                            accountType = "CHECKING";
-                            isAccountOption = true;
-                            break;
-                        } else if (accType == 2) {
-                            accountType = "SAVING";
-                            isAccountOption = true;
-                            break;
-                        } else {
-                            IO.println(String.format("Wrong option"));
-                            isAccountOption = false;
-                        }
-                    }
-
-                    IO.println(String.format("Please enter account balance"));
-                    Double accountBalance = input.nextDouble();
-
-                    // creating account
-                    Account newAccount = accountService.createAccount(
-                            new Account(accountName, accountType, accountBalance)
-                    );
-                    // Print account details
-                    IO.println(String.format("New account Details:"));
-                    IO.println(String.format(
-                            "AccountId: %d\nAccount Name: %s\nAccount Type: %s\nAccount Balance: $%.3f",
-                            newAccount.getId(), newAccount.getAccHolderName(),
-                            newAccount.getAccountType(), newAccount.getAccountBalance()
-                            )
-                    );
-
+                    createNewAccount(input, accountService);
                     break;
                 case 2:
-                    IO.println(String.format("Coming up"));
+                    updateExistingAccount(input, accountService);
+                    break;
                 case 4:
                     appRunning = false;
-                    IO.println(String.format("Closing system. Come back later!"));
+                    IO.println("Closing system. Come back later!");
                     return;
 
                 default:
-                    IO.println(String.format("Invalid option."));
+                    IO.println("Invalid option.");
             }
         }
 
 
+    }
+
+    public static void createNewAccount(Scanner input, AccountService accountService){
+        IO.println(String.format("Please enter account name"));
+        String accountName = input.nextLine().trim();
+
+        boolean isAccountOption = false;
+        String accountType = "CHECKING";
+        accountType = chooseAccountType(input, accountType);
+
+        IO.println(String.format("Please enter account balance"));
+        Double accountBalance = input.nextDouble();
+
+        // creating account
+        Account newAccount = accountService.createAccount(
+                new Account(accountName, accountType, accountBalance)
+        );
+        // Print account details
+        IO.println(String.format("New account Details:"));
+        IO.println(String.format(
+                        "AccountId: %d\nAccount Name: %s\nAccount Type: %s\nAccount Balance: $%.3f",
+                        newAccount.getId(), newAccount.getAccHolderName(),
+                        newAccount.getAccountType(), newAccount.getAccountBalance()
+                )
+        );
+    }
+
+    public static String chooseAccountType(Scanner input){
+        return chooseAccountType(input, "CHECKING");
+    }
+
+    public static String chooseAccountType(Scanner input, String accountType){
+        boolean isAccountOption = false;
+//        String accountType = "CHECKING";
+        while (!isAccountOption) {
+            IO.println(String.format("Please Choose account type: 1 for checking, 2 for saving."));
+            int accType = input.nextInt();
+
+            if (accType == 1) {
+                accountType = "CHECKING";
+                isAccountOption = true;
+                break;
+            } else if (accType == 2) {
+                accountType = "SAVING";
+                isAccountOption = true;
+                break;
+            } else {
+                IO.println(String.format("Wrong option"));
+                isAccountOption = false;
+            }
+        }
+        return accountType;
+    }
+
+    public static void updateExistingAccount(Scanner input, AccountService accountService){
+        boolean updateStatus = true;
+
+        // Retrieve account to update
+        IO.println("Enter Account id");
+        Long id = input.nextLong();
+        input.nextLine();
+
+        Account accountToUpdate = accountService.getAccountById(id);
+        IO.println(String.format("Account number entered is %d", id));
+
+        if (accountToUpdate == null){
+            IO.println("Account to update is null");
+            return;
+        }
+        else {
+            IO.println("Account to update: " + accountToUpdate + " " +id);
+            accountService.displayAccount(accountToUpdate);
+        }
+
+        while (updateStatus) {
+            IO.println("=============== Update options ===============");
+            IO.println("Press 1 to enter new Account name");
+            IO.println("Press 2 to enter new Account type");
+            IO.println("Press 3 to enter new Account Balance");
+            IO.println("Press 4 to finish update.");
+            IO.println("Press 5 to go back to main menu.");
+
+            int updateOption = input.nextInt();
+            input.nextLine();
+
+            switch (updateOption) {
+                case 1:
+                    IO.println("Please enter account name");
+                    String accountName = input.nextLine().trim();
+                    accountToUpdate.setAccHolderName(accountName);
+                    IO.println("Account name changed to " + accountName);
+                    break;
+                case 2:
+                    String accountType = chooseAccountType(input);
+                    accountToUpdate.setAccountType(accountType);
+                    IO.println("Account type changed to " + accountType);
+                    break;
+                case 3:
+                    IO.println("Please enter account balance");
+                    Double balance = input.nextDouble();
+                    accountToUpdate.setAccountBalance(balance);
+                    IO.println("Account balance changed to " + balance);
+                    break;
+                case 4:
+                    accountService.updateAccount(accountToUpdate);
+                    IO.println("Account Updated");
+                    accountService.displayAccount(accountToUpdate);
+                    return;
+                case 5:
+                    IO.println("Account not updated. Going back to main menu.");
+                    return;
+                default:
+                    IO.println("Invalid option.");
+            }
+        }
     }
 }
