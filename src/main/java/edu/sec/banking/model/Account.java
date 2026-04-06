@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Account {
-    private Long id;
+    private final Long id;
     private String accHolderName;
     private Double accountBalance;
     private String accountType;
@@ -20,10 +20,7 @@ public class Account {
     }
 
     public Account(){
-        this.id = nextId();
-        this.accountType = DEFAULT_ACCOUNT_TYPE;
-        this.accHolderName = "Account Holder";
-        this.accountBalance = 0.0;
+        this("Account Holder", DEFAULT_ACCOUNT_TYPE, 0.0);
     }
     public Account(String accountName, String accountType, Double accountBalance){
         this.id = nextId();

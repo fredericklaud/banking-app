@@ -8,20 +8,16 @@ public class AccountService {
 
     public ArrayList<Account> accounts = new ArrayList<>();
 
-    public Account createAccount(Account account){
+    public Account createAccount(String accountName, String accountType, Double accountBalance){
         Account newAccount = new Account();
-        if (account != null){
-            newAccount.setAccountType(account.getAccountType());
-            newAccount.setAccHolderName(account.getAccHolderName());
-            newAccount.setAccountBalance(account.getAccountBalance());
 
-            accounts.add(newAccount);
-            IO.println(String.format("Account created successfully!"));
-        }
-        else {
-            System.err.println("account is null");
-            return null;
-        }
+        newAccount.setAccountType(accountType);
+        newAccount.setAccHolderName(accountName);
+        newAccount.setAccountBalance(accountBalance);
+
+        accounts.add(newAccount);
+        IO.println("Account created successfully!");
+
         return newAccount;
     }
 
@@ -29,7 +25,7 @@ public class AccountService {
         boolean updateSucces = false;
         if (account != null){
             for (Account acc: accounts) {
-                if (acc.getId() == account.getId()){
+                if (account.getId().equals(acc.getId())){
                     acc.setAccountBalance(account.getAccountBalance());
                     acc.setAccHolderName(account.getAccHolderName());
                     acc.setAccountType(account.getAccountType());
@@ -46,10 +42,11 @@ public class AccountService {
     }
 
     public Account getAccountById(Long id){
-        Account account = null;
+        if (id == null) return null;
+
         for (Account acc : accounts) {
             if (id.equals(acc.getId())) {
-                // retrieve account for array list of accounts
+                IO.println("Obtained account by id");
                 return acc;
             }
         }
@@ -78,14 +75,14 @@ public class AccountService {
 
     public void deleteAccount(Account account){
         boolean deleteSuccess = false;
-        if (account != null){
-            for (Account acc: accounts){
-                if (acc.getId() == account.getId()){
-                    deleteSuccess = accounts.remove(acc);
-                    break;
-                }
+        if (account == null) return;
+        for (Account acc: accounts){
+            if (account.getId().equals(acc.getId())){
+                deleteSuccess = accounts.remove(acc);
+                break;
             }
         }
+
         if (deleteSuccess){
             IO.println(String.format("Account deleted successfully"));
         }
