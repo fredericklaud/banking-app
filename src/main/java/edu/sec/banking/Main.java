@@ -127,6 +127,14 @@ public class Main {
 
         // Retrieve account to update
         IO.println("Enter Account id");
+
+        if(!input.hasNextLong()) {
+            IO.println("Invalid Input.");
+
+            input.nextLine(); //Clears the invalid input
+            return;
+        }
+
         Long id = input.nextLong();
         input.nextLine();
 
