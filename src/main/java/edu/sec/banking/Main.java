@@ -12,7 +12,7 @@ public class Main {
 
 
 
-        IO.println("Press 1 to create Account, 2 to update account and 3 to delete account." +
+        IO.println("Press 1 to create Account, 2 to update account and 3 to delete account please." +
                                 " Press 0 to see the options again."
         );
 
@@ -67,20 +67,20 @@ public class Main {
     }
 
     private static void deleteExistingAccount(Scanner input, AccountService accountService) {
-        IO.println("Please enter account id to remove");
+        IO.println("Please enter account id to remove please");
         Long id = input.nextLong();
         Account accountToDelete = accountService.getAccountById(id);
         accountService.deleteAccount(accountToDelete);
     }
 
     public static void createNewAccount(Scanner input, AccountService accountService){
-        IO.println("Please enter account name");
+        IO.println("Please enter account name please");
         String accountName = input.nextLine().trim();
 
         String accountType = "CHECKING";
         accountType = chooseAccountType(input, accountType);
 
-        IO.println("Please enter account balance");
+        IO.println("Please enter account balance please");
         Double accountBalance = input.nextDouble();
 
         // creating account
@@ -103,7 +103,7 @@ public class Main {
         boolean isAccountOption = false;
 //        String accountType = "CHECKING";
         while (!isAccountOption) {
-            IO.println("Please Choose account type: 1 for checking, 2 for saving.");
+            IO.println("Please Choose account type: 1 for checking, 2 for saving please.");
             int accType = input.nextInt();
 
             if (accType == 1) {
