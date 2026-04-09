@@ -74,13 +74,13 @@ public class Main {
     }
 
     public static void createNewAccount(Scanner input, AccountService accountService){
-        IO.println("Please enter account name please");
+        IO.println("Please enter account name");
         String accountName = input.nextLine().trim();
 
         String accountType = "CHECKING";
         accountType = chooseAccountType(input, accountType);
 
-        IO.println("Please enter account balance please");
+        IO.println("Please enter account balance");
         Double accountBalance = input.nextDouble();
 
         // creating account
@@ -103,7 +103,7 @@ public class Main {
         boolean isAccountOption = false;
 //        String accountType = "CHECKING";
         while (!isAccountOption) {
-            IO.println("Please Choose account type: 1 for checking, 2 for saving please.");
+            IO.println("Please Choose account type: 1 for checking, 2 for saving.");
             int accType = input.nextInt();
 
             if (accType == 1) {
