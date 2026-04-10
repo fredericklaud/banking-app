@@ -3,6 +3,7 @@ package edu.sec.banking;
 import edu.sec.banking.model.Account;
 import edu.sec.banking.service.AccountService;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -104,19 +105,30 @@ public class Main {
 //        String accountType = "CHECKING";
         while (!isAccountOption) {
             IO.println("Please Choose account type: 1 for checking, 2 for saving.");
+            try {
             int accType = input.nextInt();
-
-            if (accType == 1) {
-                accountType = "CHECKING";
-                isAccountOption = true;
-                break;
-            } else if (accType == 2) {
-                accountType = "SAVING";
-                isAccountOption = true;
-                break;
-            } else {
+            int [] acType = {1, 2};
+                for (int x = 0; x < 2; x++) {
+                    if (acType[x] == accType) {
+                        if (accType == 1) {
+                            accountType = "CHECKING";
+                            isAccountOption = true;
+                            break;
+                        }
+                        if (accType == 2) {
+                            accountType = "SAVING";
+                            isAccountOption = true;
+                            break;
+                        } else {
+                            IO.println("Wrong option");
+                            isAccountOption = false;
+                            break;
+                        }
+                    }
+                }
+            } catch (InputMismatchException e) {
                 IO.println("Wrong option");
-                isAccountOption = false;
+                input.nextLine();
             }
         }
         return accountType;
